@@ -4,9 +4,10 @@ const app = express();
 const port = 3001;
 
 app.get('/', (req, res) => {
-  res.send('Hello World (from Express back-end)!');
+  // Respond with JSON
+  res.json({ message: 'Hello from the Express backend!' });
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Backend listening at http://localhost:${port}`);
 });

@@ -1,7 +1,164 @@
+// import Head from 'next/head';
+// import styles from '../styles/Home.module.css';
+
+// export default function Home() {
+//   const [message, setMessage] = useState(''); // State to hold the backend response
+
+//   // Fetch the message from the Express backend
+//   useEffect(() => {
+//     fetch('http://localhost:3001/api/hello') // Replace with your backend URL
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setMessage(data.message); // Set the message in the state
+//       });
+//   }, []);
+  
+//   return (
+//     <div className={styles.container}>
+//       <Head>
+//         <title>Create Next App</title>
+//         <link rel="icon" href="/favicon.ico" />
+//       </Head>
+
+//       <main>
+//         <h1 className={styles.title}>
+//           Welcome to <a href="https://nextjs.org"> ALGX!</a>
+//         </h1>
+
+//         <p className={styles.description}>
+//           Asian Logistics Group
+//         </p>
+
+//         <div className={styles.grid}>
+//           <a href="https://nextjs.org/docs" className={styles.card}>
+//             <h3>Plan Shipments Ahead &rarr;</h3>
+//           </a>
+
+//           <a href="https://nextjs.org/learn" className={styles.card}>
+//             <h3>Scale Solution Quickly &rarr;</h3>
+//           </a>
+
+//           <a
+//             href="https://github.com/vercel/next.js/tree/canary/examples"
+//             className={styles.card}
+//           >
+//             <h3>Advanced Scheduling &rarr;</h3>
+//           </a>
+
+//           <a
+//             href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+//             className={styles.card}
+//           >
+//             <h3>Execute Faster &rarr;</h3>
+
+//           </a>
+//         </div>
+//       </main>
+
+//       <footer>
+//         <a
+//           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+//           target="_blank"
+//           rel="noopener noreferrer"
+//         >
+//           Powered by{' '}
+//           <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
+//         </a>
+//       </footer>
+
+//       <style jsx>{`
+//         main {
+//           padding: 5rem 0;
+//           flex: 1;
+//           display: flex;
+//           flex-direction: column;
+//           justify-content: center;
+//           align-items: center;
+//         }
+//         footer {
+//           width: 100%;
+//           height: 100px;
+//           border-top: 1px solid #eaeaea;
+//           display: flex;
+//           justify-content: center;
+//           align-items: center;
+//         }
+//         footer img {
+//           margin-left: 0.5rem;
+//         }
+//         footer a {
+//           display: flex;
+//           justify-content: center;
+//           align-items: center;
+//           text-decoration: none;
+//           color: inherit;
+//         }
+//         code {
+//           background: #fafafa;
+//           border-radius: 5px;
+//           padding: 0.75rem;
+//           font-size: 1.1rem;
+//           font-family:
+//             Menlo,
+//             Monaco,
+//             Lucida Console,
+//             Liberation Mono,
+//             DejaVu Sans Mono,
+//             Bitstream Vera Sans Mono,
+//             Courier New,
+//             monospace;
+//         }
+//       `}</style>
+
+//       <style jsx global>{`
+//         html,
+//         body {
+//           padding: 0;
+//           margin: 0;
+//           font-family:
+//             -apple-system,
+//             BlinkMacSystemFont,
+//             Segoe UI,
+//             Roboto,
+//             Oxygen,
+//             Ubuntu,
+//             Cantarell,
+//             Fira Sans,
+//             Droid Sans,
+//             Helvetica Neue,
+//             sans-serif;
+//         }
+//         * {
+//           box-sizing: border-box;
+//         }
+//       `}</style>
+//     </div>
+//   );
+// }
+
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [message, setMessage] = useState(''); 
+  useEffect(() => {
+    fetch('http://localhost:3001/')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response not received');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMessage(data.message);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+        setMessage('Error fetching data from back-end');
+      });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,14 +168,19 @@ export default function Home() {
 
       <main>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org"> ALGX!</a>
+          Welcome to <a href="https://nextjs.org">ALGX!</a>
         </h1>
 
         <p className={styles.description}>
           Asian Logistics Group
         </p>
 
+        {/* Display the message from the backend */}
         <div className={styles.grid}>
+          <div className={styles.card}>
+            <h3>{message ? message : 'Loading...'}</h3> {/* Show message or loading */}
+          </div>
+
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h3>Plan Shipments Ahead &rarr;</h3>
           </a>
@@ -39,7 +201,6 @@ export default function Home() {
             className={styles.card}
           >
             <h3>Execute Faster &rarr;</h3>
-
           </a>
         </div>
       </main>
